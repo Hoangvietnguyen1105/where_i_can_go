@@ -25,7 +25,7 @@ export class DataLocal {
     this.dbVersion = GameConstant.INDEXEDDB_VERSION;
     this.db = null;
     this.totalLoad = 0;
-    this.totalData = 4;
+    this.totalData = 3;
     var request = window.indexedDB.open(this.dbName, this.dbVersion);
     request.onupgradeneeded = (event) => {
       this.db = event.target.result;
@@ -40,7 +40,6 @@ export class DataLocal {
       this.db = event.target.result;
       this.getCurrency();
       this.getCurrentLevel();
-      this.getStartNumber();
       this.getUserIncome();
     };
     request.onerror = (event) => {

@@ -32,6 +32,7 @@ export class DataManager {
   static nextLevel() {
     this.currentLevel++;
     UserData.currentLevel = this.currentLevel;
+    DataLocal.updateCurrentLevelData(this.currentLevel)
   }
 
 }
