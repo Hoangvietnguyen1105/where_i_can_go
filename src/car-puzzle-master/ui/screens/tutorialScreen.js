@@ -149,7 +149,7 @@ export class TutorialScreen extends UIScreen {
     });
   }
 
-  playAnimBtnNumberCount() { 
+  playAnimBtnNumberCount() {
     this.tweenButtonNumberCount?.stop();
     this.tweenButtonNumberCount.start();
   }
@@ -167,11 +167,11 @@ export class TutorialScreen extends UIScreen {
     this.fire(TutorialScreenEvent.ButtonStartNumberClicked);
   }
 
-  updateStartNumberText(startNumber, money) { 
+  updateStartNumberText(startNumber, money) {
     this.curStartNumberText.element.text = startNumber;
     this.moneyStartNumberText.element.text = Util.getCashFormat(money);
     this.nextStartNumberText.element.text = startNumber + GameConstant.PLAYER_START_UPGRADE_NUMBER_STEP;
-    if(UserData.currency >= money) {
+    if (UserData.currency >= money) {
       this.moneyStartNumberText.element.color = Util.createColor(255, 255, 255);
       this.btnNumberCount.iconAds.enabled = false;
       this.btnNumberCount.iconMoney.enabled = true;
@@ -182,7 +182,7 @@ export class TutorialScreen extends UIScreen {
     }
   }
 
-  updateIncomeText(income, money) { 
+  updateIncomeText(income, money) {
     this.curIncomeText.element.text = "x" + income.toFixed(1);
     this.nextIncomeText.element.text = "x" + (income + GameConstant.PLAYER_START_UPGRADE_INCOME_STEP).toFixed(1);
     this.moneyIncomeText.element.text = Util.getCashFormat(money);

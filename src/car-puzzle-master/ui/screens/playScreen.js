@@ -14,7 +14,7 @@ import { PlaySceneEvent } from "../../scenes/playScene";
 import { Setting } from "../objects/setting/setting";
 import { Sound } from "../../../template/sound/sound";
 import { UserData } from "../../data/userData";
-
+import { SoundManager } from "../../../template/soundManager";
 
 export class PlayScreen extends UIScreen {
   constructor() {
@@ -88,7 +88,7 @@ export class PlayScreen extends UIScreen {
       outlineColor: Util.createColor(0, 0, 0),
     });
     this.addChild(this.levelText);
-   
+
   }
 
   _initRunButton() {
@@ -116,6 +116,7 @@ export class PlayScreen extends UIScreen {
   }
 
   _onRunButtonTouch() {
+    SoundManager.play('sfx_civic_idle', true, 1)
     // this.runButton.element.enabled = false;
     this.runButton.element.opacity = 0;
     this.runText.element.opacity = 0;

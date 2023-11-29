@@ -34,6 +34,7 @@ import { xeCuuHoa } from "../objects/player/xecuuhoa";
 import { Time } from "../../template/systems/time/time";
 import { PlayerEvent } from "../scripts/controllers/playerController";
 import { Sound } from "../../template/sound/sound";
+import { SoundManager } from "../../template/soundManager";
 
 export const PlaySceneEvent = Object.freeze({
   LevelLoaded: "levelLoaded",
@@ -72,7 +73,7 @@ export class PlayScene extends Scene {
     this._initBg();
     this._initPlane();
     this._initRenderPhysics();
-    Sound.play("theme");
+    SoundManager.play('theme', true, 0.2)
   }
 
   // replay() {
@@ -85,7 +86,7 @@ export class PlayScene extends Scene {
   //   this.respawnLevel();
   // }
 
-  _onStart() {}
+  _onStart() { }
 
   update(dt) {
     super.update(dt);
@@ -135,6 +136,7 @@ export class PlayScene extends Scene {
   }
 
   _onLose() {
+    SoundManager.stop('sfx_civic_idle')
     if (this.isLose == false) {
       this.isLose = true;
       setTimeout(() => {
@@ -353,7 +355,7 @@ export class PlayScene extends Scene {
     screenPlay.runButton.element.opacity = 1;
     screenPlay.runText.element.opacity = 1;
     this.updateCamera();
-    
+
   }
 
   updateCamera() {
@@ -366,11 +368,11 @@ export class PlayScene extends Scene {
       this.mainCamera.setLocalEulerAngles(118.71, 0, -180);
     }
     if (UserData.currentLevel == 3) {
-      this.mainCamera.setLocalPosition(0.798, 41.009,-26.349);
-    this.mainCamera.setLocalEulerAngles(111.41, 0, -180);
+      this.mainCamera.setLocalPosition(0.798, 41.009, -26.349);
+      this.mainCamera.setLocalEulerAngles(111.41, 0, -180);
     }
     if (UserData.currentLevel == 4 || UserData.currentLevel == 5) {
-      this.mainCamera.setLocalPosition(0.798, 41.009,-24.039);
+      this.mainCamera.setLocalPosition(0.798, 41.009, -24.039);
       this.mainCamera.setLocalEulerAngles(111.41, 0, -180);
     }
 

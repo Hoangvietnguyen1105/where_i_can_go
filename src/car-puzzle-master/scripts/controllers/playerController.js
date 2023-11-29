@@ -66,11 +66,11 @@ export const PlayerController = Script.createScript({
     this.reset();
   },
 
-  reset() {},
+  reset() { },
 
-  update() {},
+  update() { },
 
-  onRun() {},
+  onRun() { },
 
   onTriggerEnter(e) {
     let other = e.other;

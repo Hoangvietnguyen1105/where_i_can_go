@@ -11,14 +11,14 @@ export class Sound {
     this.soundEntity.addComponent("sound");
     app.root.addChild(this.soundEntity);
 
-    this.soundEntity.sound.addSlot("theme", {
-      asset: AssetLoader.getAssetByKey("theme"),
-      pitch: 1,
-      volume: 1,
-      loop: true,
-      autoPlay: false,
-      overlap: true,
-    });
+    // this.soundEntity.sound.addSlot("theme", {
+    //   asset: AssetLoader.getAssetByKey("theme"),
+    //   pitch: 1,
+    //   volume: 1,
+    //   loop: true,
+    //   autoPlay: false,
+    //   overlap: true,
+    // });
 
     this.soundEntity.sound.addSlot("crash", {
       asset: AssetLoader.getAssetByKey("crash"),
@@ -28,6 +28,15 @@ export class Sound {
       autoPlay: false,
       overlap: true,
     });
+    this.soundEntity.sound.addSlot("sfx_civic_idle", {
+      asset: AssetLoader.getAssetByKey("crash"),
+      pitch: 1,
+      volume: 1,
+      loop: false,
+      autoPlay: false,
+      overlap: true,
+    });
+
   }
 
   static play(soundName) {
