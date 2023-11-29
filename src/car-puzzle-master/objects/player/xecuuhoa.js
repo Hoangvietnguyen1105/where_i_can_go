@@ -44,6 +44,11 @@ export class xeCuuHoa extends Entity {
       scale: new Vec3(2, 1, 1),
     });
 
+    // this.arrow = new Entity()
+    // this.arrow.addComponent("model", {
+    //   type: "cone",
+    // });
+    // this.addChild(this.arrow)
     this.on(SpawningEvent.Spawn, () => {
       this.collider.enable();
       this.collider.respawn();

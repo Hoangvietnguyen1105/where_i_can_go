@@ -32,17 +32,17 @@ export const ObjectGameType = Object.freeze({
   Right: "right",
   Around: "around",
   Xe: "xe",
-  house:"small_buildingB",
-  house1:"small_buildingE",
-  house2:"house_type04",
-  house3:"house_type08",
-  house4:"house_type09",
-  house5:"house_type10",
-  house6:"house_type15",
-  house7:"house_type19",
-  win:'win',
-  barier:'barier',
-  plane:'plane'
+  house: "small_buildingB",
+  house1: "small_buildingE",
+  house2: "house_type04",
+  house3: "house_type08",
+  house4: "house_type09",
+  house5: "house_type10",
+  house6: "house_type15",
+  house7: "house_type19",
+  win: 'win',
+  barier: 'barier',
+  plane: 'plane'
 
 });
 
@@ -126,49 +126,54 @@ export class Level extends Entity {
           this.cars.push(obj);
           break;
         case ObjectGameType.house:
-         obj = this.houseSpawner.spawn();
+          obj = this.houseSpawner.spawn();
           obj.config(data);
           break;
-         case ObjectGameType.house1:
-         obj = this.house1Spawner.spawn();
+        case ObjectGameType.house1:
+          obj = this.house1Spawner.spawn();
           obj.config(data);
           break;
-         case ObjectGameType.house2:
-         obj = this.house2Spawner.spawn();
+        case ObjectGameType.house2:
+          obj = this.house2Spawner.spawn();
           obj.config(data);
           break;
-         case ObjectGameType.house3:
-         obj = this.house3Spawner.spawn();
+        case ObjectGameType.house3:
+          obj = this.house3Spawner.spawn();
           obj.config(data);
           break;
-         case ObjectGameType.house4:
-         obj = this.house4Spawner.spawn();
+        case ObjectGameType.house4:
+          obj = this.house4Spawner.spawn();
           obj.config(data);
           break;
-         case ObjectGameType.house5:
-         obj = this.house5Spawner.spawn();
+        case ObjectGameType.house5:
+          obj = this.house5Spawner.spawn();
           obj.config(data);
           break;
-         case ObjectGameType.house6:
-         obj = this.house6Spawner.spawn();
+        case ObjectGameType.house6:
+          obj = this.house6Spawner.spawn();
           obj.config(data);
           break;
-         case ObjectGameType.house7:
-         obj = this.house7Spawner.spawn();
+        case ObjectGameType.house7:
+          obj = this.house7Spawner.spawn();
           obj.config(data);
           break;
         case ObjectGameType.win:
-         obj = this.winSpawner.spawn();
+          obj = this.winSpawner.spawn();
           obj.config(data);
           break;
-         case ObjectGameType.barier:
-           obj = this.barierSpawner.spawn();
+        case ObjectGameType.barier:
+          obj = this.barierSpawner.spawn();
           obj.config(data);
           break;
         case ObjectGameType.plane:
-           obj = this.planeSpawner.spawn();
+          obj = this.planeSpawner.spawn();
           obj.config(data);
           break;
+        case "camera":
+          let pos = data.pos
+          let rot = data.rot
+          this.parent.mainCamera.setLocalPosition(pos.x, pos.y, pos.z)
+          this.parent.mainCamera.setLocalEulerAngles(rot.x, rot.y, rot.z)
         default: {
           obj = new Entity();
           break;
@@ -196,7 +201,7 @@ export class Level extends Entity {
         return this.ngabaSpawner;
       case "house_type04":
         return this.houseSpawner
-      
+
       default:
         return null;
     }
@@ -272,7 +277,7 @@ export class Level extends Entity {
       args: ["ngatu"],
     });
 
-    
+
     let houseEntity = new Entity("duongcongSpawner");
     this.addChild(houseEntity);
     this.houseSpawner = houseEntity.addScript(Spawner, {
@@ -334,21 +339,21 @@ export class Level extends Entity {
     this.addChild(winEntity);
     this.winSpawner = winEntity.addScript(Spawner, {
       class: win,
-      poolSize:5,
+      poolSize: 5,
     });
 
     let barierEntity = new Entity("barierEntity");
     this.addChild(barierEntity);
     this.barierSpawner = barierEntity.addScript(Spawner, {
       class: barier,
-      poolSize:20,
+      poolSize: 20,
     });
 
     let planeEntity = new Entity("planeEntity");
     this.addChild(planeEntity);
     this.planeSpawner = planeEntity.addScript(Spawner, {
       class: Plane,
-      poolSize:5,
+      poolSize: 5,
     });
   }
 }

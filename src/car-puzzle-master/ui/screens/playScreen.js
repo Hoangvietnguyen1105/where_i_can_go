@@ -15,14 +15,18 @@ import { Setting } from "../objects/setting/setting";
 import { Sound } from "../../../template/sound/sound";
 import { UserData } from "../../data/userData";
 import { SoundManager } from "../../../template/soundManager";
+import { Tween } from "../../../template/systems/tween/tween";
+import { Time } from "../../../template/systems/time/time";
 
 export class PlayScreen extends UIScreen {
   constructor() {
     super(GameConstant.SCREEN_PLAY);
     this._initLevelText();
     this._initRunButton();
+    this._initStopButton()
     this._initBtnSetting();
     this._initSetting();
+    this._initTutorial()
     this.resize();
   }
 
@@ -93,7 +97,7 @@ export class PlayScreen extends UIScreen {
 
   _initRunButton() {
     this.runButton = ObjectFactory.createImageElement("spr_btn_green", {
-      anchor: new Vec4(0.5, 0.15, 0.5, 0.15),
+      anchor: new Vec4(0.4, 0.15, 0.4, 0.15),
       pivot: new Vec2(0.5, 0.5),
       scale: 0.8,
     })
@@ -114,14 +118,86 @@ export class PlayScreen extends UIScreen {
     });
     this.runButton.addChild(this.runText);
   }
+  _initStopButton() {
+    this.stopButton = ObjectFactory.createImageElement("spr_btn_green", {
+      anchor: new Vec4(0.6, 0.15, 0.6, 0.15),
+      pivot: new Vec2(0.5, 0.5),
+      scale: 0.8,
+    })
+    this.addChild(this.stopButton);
+    Util.registerOnTouch(this.stopButton.element, this._onStopButtonTouch, this);
+
+    this.stopText = new Entity("runText");
+    this.stopText.addComponent("element", {
+      type: ELEMENTTYPE_TEXT,
+      anchor: new Vec4(0.45, 0.25, 0.45, 0.25),
+      pivot: new Vec2(0.5, 0.5),
+      fontSize: 55,
+      fontAsset: AssetLoader.getAssetByKey("font_ariston_comic"),
+      text: "Stop",
+      color: Util.createColor(255, 255, 255),
+      outlineThickness: 0,
+      outlineColor: Util.createColor(0, 0, 0),
+    });
+    this.stopButton.addChild(this.stopText);
+  }
+
+  _initTutorial() {
+
+
+    this.tutorText = new Entity("runText");
+    this.tutorText.addComponent("element", {
+      type: ELEMENTTYPE_TEXT,
+      anchor: new Vec4(0.5, 0.35, 0.5, 0.35),
+      pivot: new Vec2(0.5, 0.5),
+      fontSize: 55,
+      fontAsset: AssetLoader.getAssetByKey("font_ariston_comic"),
+      text: "Click on the car to rotate the car",
+      color: Util.createColor(0, 0, 0),
+      outlineThickness: 0,
+      outlineColor: Util.createColor(0, 0, 0),
+    });
+    this.addChild(this.tutorText);
+    var check = 0
+    Tween.createCountTween({
+      duration: 1,
+      loop: true,
+      onUpdate: () => {
+        if (check < 0.5) {
+          check += Time.dt
+          return
+        }
+        check = 0
+        if (this.tutorText.mau == "den") {
+          this.tutorText.element.color = Util.createColor(255, 255, 255)
+          this.tutorText.mau = "trang";
+        }
+        else {
+          this.tutorText.element.color = Util.createColor(0, 0, 0)
+          this.tutorText.mau = "den";
+        }
+
+      }
+    }).start()
+  }
 
   _onRunButtonTouch() {
     SoundManager.play('sfx_civic_idle', true, 1)
     // this.runButton.element.enabled = false;
     this.runButton.element.opacity = 0;
     this.runText.element.opacity = 0;
+    this.tutorText.enabled = false
     let playScene = SceneManager.getScene(GameConstant.SCENE_PLAY);
     playScene.fire(PlaySceneEvent.RunCar)
+  }
+  _onStopButtonTouch() {
+
+    SoundManager.stop('sfx_civic_idle', true, 1)
+    // this.runButton.element.enabled = false;
+    this.runButton.element.opacity = 1;
+    this.runText.element.opacity = 1;
+    let playScene = SceneManager.getScene(GameConstant.SCENE_PLAY);
+    playScene.fire(PlaySceneEvent.StopCar)
   }
   update() {
     super.update();

@@ -41,6 +41,7 @@ export const PlaySceneEvent = Object.freeze({
   LevelWin: "levelWin",
   LevelLose: "levelLose",
   RunCar: "runCar",
+  StopCar: "stop",
   CountCar: "countCar",
   NextLevel: "nextLevel",
 });
@@ -55,6 +56,8 @@ export class PlayScene extends Scene {
     this.playScreen = this.ui.getScreen(GameConstant.SCREEN_PLAY);
     this.ui.setScreenActive(GameConstant.SCREEN_PLAY);
     this.on(PlaySceneEvent.RunCar, this.onRunCar, this);
+    this.on(PlaySceneEvent.StopCar, this.onStopCar, this);
+
     this.on(PlaySceneEvent.LevelLose, this._onLose, this);
     this.on(PlaySceneEvent.LevelWin, this._onWin, this);
     this.on(PlaySceneEvent.CountCar, this._onCountCar, this);
@@ -65,10 +68,11 @@ export class PlayScene extends Scene {
     this.isLose = false;
   }
   _initialize() {
+    this._initCamera();
+
     this._initLevel();
     this._initLight();
     this._initPlayer();
-    this._initCamera();
     this._initInputHandler();
     this._initBg();
     this._initPlane();
@@ -333,6 +337,12 @@ export class PlayScene extends Scene {
       car.state = PlayerEvent.Run;
     });
   }
+  onStopCar() {
+    this.cars.forEach((car) => {
+      car.move.isMoving = false;
+      // car.state = PlayerEvent;
+    });
+  }
 
   resetLevel() {
     this.level.destroy();
@@ -340,6 +350,7 @@ export class PlayScene extends Scene {
     let screenPlay = this.ui.getScreen(GameConstant.SCREEN_PLAY);
     screenPlay.runButton.element.opacity = 1;
     screenPlay.runText.element.opacity = 1;
+    screenPlay.tutorText.enabled = true
   }
 
   nextLevel() {
@@ -354,27 +365,29 @@ export class PlayScene extends Scene {
     let screenPlay = this.ui.getScreen(GameConstant.SCREEN_PLAY);
     screenPlay.runButton.element.opacity = 1;
     screenPlay.runText.element.opacity = 1;
+    screenPlay.tutorText.enabled = true
+
     this.updateCamera();
 
   }
 
   updateCamera() {
-    if (UserData.currentLevel == 1) {
-      this.mainCamera.setLocalPosition(5.67, 32.73, -24.417);
-      this.mainCamera.setLocalEulerAngles(118.86, 0, 180);
-    }
-    if (UserData.currentLevel == 2) {
-      this.mainCamera.setLocalPosition(0.798, 41.009, -34.534);
-      this.mainCamera.setLocalEulerAngles(118.71, 0, -180);
-    }
-    if (UserData.currentLevel == 3) {
-      this.mainCamera.setLocalPosition(0.798, 41.009, -26.349);
-      this.mainCamera.setLocalEulerAngles(111.41, 0, -180);
-    }
-    if (UserData.currentLevel == 4 || UserData.currentLevel == 5) {
-      this.mainCamera.setLocalPosition(0.798, 41.009, -24.039);
-      this.mainCamera.setLocalEulerAngles(111.41, 0, -180);
-    }
+    // if (UserData.currentLevel == 1) {
+    //   this.mainCamera.setLocalPosition(5.67, 32.73, -24.417);
+    //   this.mainCamera.setLocalEulerAngles(118.86, 0, 180);
+    // }
+    // if (UserData.currentLevel == 2) {
+    //   this.mainCamera.setLocalPosition(0.798, 41.009, -34.534);
+    //   this.mainCamera.setLocalEulerAngles(118.71, 0, -180);
+    // }
+    // if (UserData.currentLevel == 3) {
+    //   this.mainCamera.setLocalPosition(0.798, 41.009, -26.349);
+    //   this.mainCamera.setLocalEulerAngles(111.41, 0, -180);
+    // }
+    // if (UserData.currentLevel == 4 || UserData.currentLevel == 5) {
+    //   this.mainCamera.setLocalPosition(0.798, 41.009, -24.039);
+    //   this.mainCamera.setLocalEulerAngles(111.41, 0, -180);
+    // }
 
   }
 }
